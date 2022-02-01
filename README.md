@@ -1,3 +1,5 @@
+# Testing and Debugging for SWE 261P at UC Irvine
+
 [![cryptomator](cryptomator.png)](https://cryptomator.org/)
 
 [![Build](https://github.com/cryptomator/cryptomator/workflows/Build/badge.svg)](https://github.com/cryptomator/cryptomator/actions?query=workflow%3ABuild)
