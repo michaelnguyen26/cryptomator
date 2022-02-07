@@ -40,6 +40,20 @@ public class SecurePasswordFieldTest {
 			Assertions.assertEquals("anteater", pwField.getCharacters().toString());
 		}
 
+		/* New Testing Partition */
+
+		@Test
+		@DisplayName("\"1\".append(\"test\")")
+		public void append1() {
+			int testVal = Integer.valueOf("1");
+			pwField.setPassword(testVal + "");
+			pwField.appendText("test");
+
+			Assertions.assertEquals("1test", pwField.getCharacters().toString());
+		}
+
+		/* END OF TESTING PARTITION */
+
 		@Test
 		@DisplayName("\"eater\".insert(0, \"ant\")")
 		public void insert1() {

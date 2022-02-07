@@ -29,10 +29,10 @@ public class AutoCompleterTest {
 	}
 
 	@Nested
-	@DisplayName("search in dict: ['tame', 'teach', 'teacher']")
+	@DisplayName("search in dict: ['tame', 'teach', 'teacher', 'irvine2022']")
 	public class NarrowedDownDict {
 
-		AutoCompleter autoCompleter = new AutoCompleter(Set.of("tame", "teach", "teacher"));
+		AutoCompleter autoCompleter = new AutoCompleter(Set.of("tame", "teach", "teacher", "irvine" + 2022));
 
 		@ParameterizedTest
 		@DisplayName("find 'tame'")
@@ -42,6 +42,22 @@ public class AutoCompleterTest {
 			Assertions.assertTrue(result.isPresent());
 			Assertions.assertEquals("tame", result.get());
 		}
+
+		/* Partition Testing */
+
+		@ParameterizedTest
+		@DisplayName("find 'irvine'")
+		@ValueSource(strings = {"i", "ir", "irv", "irvi","irvin", "irvine", "irvine2022"})
+		public void testFindTest(String prefix) {
+			Optional<String> result = autoCompleter.autocomplete(prefix);
+			Assertions.assertTrue(result.isPresent());
+			Assertions.assertEquals("irvine2022", result.get());
+		}
+
+		/* END OF PARTITION TESTING */
+
+
+
 
 		@SuppressWarnings("SpellCheckingInspection")
 		@ParameterizedTest
