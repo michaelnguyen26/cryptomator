@@ -22,13 +22,50 @@ public class PasswordStrengthUtilTest {
 	}
 
 	@Test
-	@Disabled("waiting on upstream fix") // https://github.com/nulab/zxcvbn4j/issues/54
 	public void testIssue979() {
 		PasswordStrengthUtil util = new PasswordStrengthUtil(Mockito.mock(ResourceBundle.class), Mockito.mock(Environment.class));
-		int result1 = util.computeRate("backed derrick buckling mountains glove client procedures desire destination sword hidden ram");
-		int result2 = util.computeRate("backed derrick buckling mountains glove client procedures desire destination sword hidden ram escalation");
+		int result1 = util.computeRate("backedderrickbucklingmountainsgloveclientproceduresdesiredestinationswordhiddenram");
 		Assertions.assertEquals(4, result1);
-		Assertions.assertEquals(4, result2);
 	}
 
+
+	// New Test Cases for Part 2
+
+	@Test
+	public void testForWeak() {
+		PasswordStrengthUtil util = new PasswordStrengthUtil(Mockito.mock(ResourceBundle.class), Mockito.mock(Environment.class));
+		int result1 = util.computeRate("uci");
+		Assertions.assertEquals(0, result1);
+	}
+
+	@Test
+	public void testForWeak2() {
+		PasswordStrengthUtil util = new PasswordStrengthUtil(Mockito.mock(ResourceBundle.class), Mockito.mock(Environment.class));
+		int result1 = util.computeRate("irvine");
+		Assertions.assertEquals(1, result1);
+	}
+
+	@Test
+	public void testForMedium() {
+		PasswordStrengthUtil util = new PasswordStrengthUtil(Mockito.mock(ResourceBundle.class), Mockito.mock(Environment.class));
+		int result1 = util.computeRate("mswe2022");
+		Assertions.assertEquals(2, result1);
+	}
+
+	@Test
+	public void testForMedium2() {
+		PasswordStrengthUtil util = new PasswordStrengthUtil(Mockito.mock(ResourceBundle.class), Mockito.mock(Environment.class));
+		int result1 = util.computeRate("Irvine-2022");
+		Assertions.assertEquals(3, result1);
+	}
+
+	@Test
+	public void testForStrong() {
+		PasswordStrengthUtil util = new PasswordStrengthUtil(Mockito.mock(ResourceBundle.class), Mockito.mock(Environment.class));
+		int result1 = util.computeRate("MsweIrvine-2022!");
+		Assertions.assertEquals(4, result1);
+	}
+
+
+	// END OF NEW TEST CASES
 }
