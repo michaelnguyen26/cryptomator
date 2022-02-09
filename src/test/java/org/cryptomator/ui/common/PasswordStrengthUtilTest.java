@@ -55,7 +55,7 @@ public class PasswordStrengthUtilTest {
 	@Test
 	public void testForMedium2() {
 		PasswordStrengthUtil util = new PasswordStrengthUtil(Mockito.mock(ResourceBundle.class), Mockito.mock(Environment.class));
-		int result1 = util.computeRate("Irvine-2022");
+		int result1 = util.computeRate("IrvineMswe");
 		Assertions.assertEquals(3, result1);
 	}
 
