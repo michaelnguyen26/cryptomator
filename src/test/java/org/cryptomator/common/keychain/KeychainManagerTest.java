@@ -2,6 +2,7 @@ package org.cryptomator.common.keychain;
 
 
 import org.cryptomator.integrations.keychain.KeychainAccessException;
+import org.cryptomator.integrations.keychain.KeychainAccessProvider;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
@@ -16,7 +17,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
 
-public class KeychainManagerTest {
+public class KeychainManagerTest{
 
 	@Test
 	public void testStoreAndLoad() throws KeychainAccessException {
@@ -52,7 +53,42 @@ public class KeychainManagerTest {
 			latch.await(1, TimeUnit.SECONDS);
 			Assertions.assertEquals(true, result.get());
 		}
+	}
+	// New Test Cases for Structural (Coverage) - Section 3
 
+	@Test
+	public void testCreateStoredPassphraseProperty() throws KeychainAccessException {
+		KeychainManager keychainManager = new KeychainManager(new SimpleObjectProperty<>(new MapKeychainAccess()));
+		keychainManager.storePassphrase("irvine", "asd");
+
+		// delete the added passphrase
+		keychainManager.deletePassphrase("irvine");
+		keychainManager.displayName();
+
+		// check if passphrase is stored now
+		Assertions.assertEquals(false, keychainManager.isPassphraseStored("test"));
 	}
 
+	@Test
+	public void testChangePassphrase() throws KeychainAccessException {
+		KeychainManager keychainManager = new KeychainManager(new SimpleObjectProperty<>(new MapKeychainAccess()));
+		keychainManager.storePassphrase("irvineMSWE", "remove");
+
+		// change the added passphrase
+		keychainManager.changePassphrase("irvineMSWE", "test_phrase");
+		keychainManager.changePassphrase("irvineMSWE", keychainManager.displayName(), "test_phrase");
+
+		// check if passphrase is still stored (and changed)
+		Assertions.assertEquals(true, keychainManager.isPassphraseStored("irvineMSWE"));
+	}
+
+	@Test
+	public void testIsSupportAndIsLock() throws KeychainAccessException {
+		KeychainManager keychainManager = new KeychainManager(new SimpleObjectProperty<>(new MapKeychainAccess()));
+
+		Assertions.assertEquals(false, keychainManager.isLocked());
+		Assertions.assertEquals(true, keychainManager.isSupported());
+	}
+
+	// End of Structural Testing (Coverage)
 }

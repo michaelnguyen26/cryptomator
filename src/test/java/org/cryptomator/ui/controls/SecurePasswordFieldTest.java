@@ -1,5 +1,6 @@
 package org.cryptomator.ui.controls;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Assumptions;
 import org.junit.jupiter.api.BeforeAll;
@@ -8,9 +9,23 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import javafx.application.Platform;
+import javafx.beans.property.BooleanProperty;
+import javafx.beans.property.ReadOnlyBooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
+import javafx.event.EventType;
+import javafx.scene.AccessibleAttribute;
+import javafx.scene.AccessibleRole;
+import javafx.scene.input.KeyEvent;
 import java.awt.GraphicsEnvironment;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.DragEvent;
+import javafx.scene.input.Dragboard;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyCodeCombination;
+import javafx.scene.input.KeyCombination;
+import javafx.scene.input.KeyEvent;
 
 public class SecurePasswordFieldTest {
 
@@ -26,6 +41,36 @@ public class SecurePasswordFieldTest {
 			throw new ExceptionInInitializerError();
 		}
 	}
+
+	// New Test Cases for Structural (Coverage) - Section 3
+
+	@Test
+	public void testRevealPasswordProperty(){
+		pwField.setRevealPassword(true);
+	//		pwField.revealPasswordProperty();
+		Assertions.assertEquals(true, pwField.isRevealPassword());
+		pwField.setRevealPassword(false);
+	//		pwField.revealPasswordProperty();
+		Assertions.assertEquals(false, pwField.isRevealPassword());
+	}
+
+	@Test
+	public void testGetters(){
+		Assertions.assertEquals(false, pwField.isContainingNonPrintableChars());
+		Assertions.assertEquals(false, pwField.isCapsLocked());
+		Assertions.assertEquals(false, pwField.containsNonPrintableCharacters());
+		Assertions.assertEquals(new SimpleBooleanProperty().toString(), pwField.containingNonPrintableCharsProperty().toString());
+		Assertions.assertEquals(new SimpleBooleanProperty().toString(), pwField.capsLockedProperty().toString());
+	}
+
+	@Test
+	public void testAccessibleAttribute(){
+		Assertions.assertEquals(true, pwField.queryAccessibleAttribute(AccessibleAttribute.EDITABLE));
+		Assertions.assertEquals(null, pwField.queryAccessibleAttribute(AccessibleAttribute.TEXT));
+	}
+
+
+	// End of Structural Testing (Coverage)
 
 	@Nested
 	@DisplayName("Content Update Events")
