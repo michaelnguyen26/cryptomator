@@ -41,8 +41,8 @@ import org.mockito.Spy;
 
 public class KeychainManagerTest{
 
-	@Mock
-	KeychainManager keychainManagerMock;
+
+	//KeychainManager keychainManagerMock;
 
 	@Test
 	public void testStoreAndLoad() throws KeychainAccessException {
@@ -108,13 +108,19 @@ public class KeychainManagerTest{
 	}
 
 	@Test
-	public void checkIfPassphraseStoredIsCalledAfterStoringPassphrase() throws KeychainAccessException {
-		keychainManagerMock = new KeychainManager(new SimpleObjectProperty<>(new MapKeychainAccess()));
-		keychainManagerMock.storePassphrase("irvineMSWE", "remove");
-		keychainManagerMock.changePassphrase("irvineMSWE", "test_phrase");
+	public void testStorePassphraseWithMockito() throws KeychainAccessException {
+		KeychainManager keychainManagerMock;
+		keychainManagerMock = mock(KeychainManager.class);
+		keychainManagerMock.storePassphrase("irvineMSWE", "create");
+
+		when(keychainManagerMock.isPassphraseStored("irvineMSWE")).thenReturn(true);
+
+		Assertions.assertEquals(true, keychainManagerMock.isPassphraseStored("irvineMSWE"));
+
 		InOrder inOrder = inOrder(keychainManagerMock);
-		inOrder.verify(keychainManagerMock).changePassphrase("irvineMSWE", "test_phrase");
-		inOrder.verify(keychainManagerMock).isPassphraseStored("irvineMSWE");
+		inOrder.verify(keychainManagerMock).storePassphrase(anyString(), anyString());
+		inOrder.verify(keychainManagerMock).isPassphraseStored(anyString());
+
 	}
 
 
