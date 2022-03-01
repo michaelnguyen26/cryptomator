@@ -118,8 +118,8 @@ public class KeychainManagerTest{
 		Assertions.assertEquals(true, keychainManagerMock.isPassphraseStored("irvineMSWE"));
 
 		InOrder inOrder = inOrder(keychainManagerMock);
-		inOrder.verify(keychainManagerMock).storePassphrase(anyString(), anyString());
-		inOrder.verify(keychainManagerMock).isPassphraseStored(anyString());
+		inOrder.verify(keychainManagerMock).storePassphrase("irvineMSWE", "create");
+		inOrder.verify(keychainManagerMock).isPassphraseStored("irvineMSWE");
 
 	}
 
