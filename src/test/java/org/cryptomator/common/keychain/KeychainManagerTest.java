@@ -116,7 +116,7 @@ public class KeychainManagerTest{
 
 	// End of Structural Testing (Coverage)
 
-   // Section 5: Mocking
+    // Section 5: Mocking
 
 	@Test
 	public void testStorePassphraseWithMockito() throws KeychainAccessException {
