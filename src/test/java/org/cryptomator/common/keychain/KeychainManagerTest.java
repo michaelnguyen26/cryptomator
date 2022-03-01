@@ -42,8 +42,6 @@ import org.mockito.Spy;
 public class KeychainManagerTest{
 
 
-	//KeychainManager keychainManagerMock;
-
 	@Test
 	public void testStoreAndLoad() throws KeychainAccessException {
 		KeychainManager keychainManager = new KeychainManager(new SimpleObjectProperty<>(new MapKeychainAccess()));
