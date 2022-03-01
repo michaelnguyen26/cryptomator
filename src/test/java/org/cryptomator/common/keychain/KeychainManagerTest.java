@@ -10,7 +10,9 @@ import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 
 import javafx.application.Platform;
+import javafx.beans.property.BooleanProperty;
 import javafx.beans.property.ReadOnlyBooleanProperty;
+import javafx.beans.property.SimpleBooleanProperty;
 import javafx.beans.property.SimpleObjectProperty;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
@@ -91,4 +93,24 @@ public class KeychainManagerTest{
 	}
 
 	// End of Structural Testing (Coverage)
+
+
+
+	// Section 5: Testable Design
+
+	@Test
+	public void shouldReturnPasswordPropertyPublic() throws KeychainAccessException{
+		KeychainManager keychainManager = new KeychainManager(new SimpleObjectProperty<>(new MapKeychainAccess()));
+		keychainManager.storePassphrase("MSWE", "test");
+
+		// This is Test Case 1: MSWE is stored --> true
+		BooleanProperty bool = new SimpleBooleanProperty(true);
+		Assertions.assertEquals(bool.toString(), keychainManager.createStoredPassphrasePropertyPublic("MSWE").toString());
+
+		// This is Test Case 2: Irvine is not stored --> false
+		BooleanProperty bool2 = new SimpleBooleanProperty(false);
+		Assertions.assertEquals(bool2.toString(), keychainManager.createStoredPassphrasePropertyPublic("Irvine").toString());
+	}
+
+	// End of Section 5: Testable Design
 }

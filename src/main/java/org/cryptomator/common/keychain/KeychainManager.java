@@ -141,6 +141,10 @@ public class KeychainManager implements KeychainAccessProvider {
 		return passphraseStoredProperties.getUnchecked(key);
 	}
 
+
+	// Section 5: Testable Design
+
+	// Original
 	private BooleanProperty createStoredPassphraseProperty(String key) {
 		try {
 			return new SimpleBooleanProperty(isPassphraseStored(key));
@@ -148,5 +152,16 @@ public class KeychainManager implements KeychainAccessProvider {
 			return new SimpleBooleanProperty(false);
 		}
 	}
+
+	// New implementation
+	public BooleanProperty createStoredPassphrasePropertyPublic(String key) {
+		try {
+			return new SimpleBooleanProperty(isPassphraseStored(key));
+		} catch (KeychainAccessException e) {
+			return new SimpleBooleanProperty(false);
+		}
+	}
+
+	// End of Section 5: Testable Design
 
 }
