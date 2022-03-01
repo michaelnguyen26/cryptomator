@@ -105,6 +105,19 @@ public class KeychainManagerTest{
 		Assertions.assertEquals(true, keychainManager.isPassphraseStored("irvineMSWE"));
 	}
 
+
+	@Test
+	public void testIsSupportAndIsLock() throws KeychainAccessException {
+		KeychainManager keychainManager = new KeychainManager(new SimpleObjectProperty<>(new MapKeychainAccess()));
+
+		Assertions.assertEquals(false, keychainManager.isLocked());
+		Assertions.assertEquals(true, keychainManager.isSupported());
+	}
+
+	// End of Structural Testing (Coverage)
+
+   // Section 5: Mocking
+
 	@Test
 	public void testStorePassphraseWithMockito() throws KeychainAccessException {
 		KeychainManager keychainManagerMock;
@@ -121,18 +134,7 @@ public class KeychainManagerTest{
 
 	}
 
-
-	@Test
-	public void testIsSupportAndIsLock() throws KeychainAccessException {
-		KeychainManager keychainManager = new KeychainManager(new SimpleObjectProperty<>(new MapKeychainAccess()));
-
-		Assertions.assertEquals(false, keychainManager.isLocked());
-		Assertions.assertEquals(true, keychainManager.isSupported());
-	}
-
-	// End of Structural Testing (Coverage)
-
-
+	// End of Section 5: Mocking
 
 	// Section 5: Testable Design
 
