@@ -8,6 +8,7 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
+import org.mockito.InOrder;
 
 import javafx.application.Platform;
 import javafx.beans.property.BooleanProperty;
@@ -18,8 +19,30 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
+import static java.util.Arrays.asList;
+import static org.mockito.Mockito.inOrder;
+import static org.mockito.Mockito.when;
+import static org.mockito.ArgumentMatchers.anyDouble;
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.inOrder;
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
+
+import org.mockito.ArgumentCaptor;
+import org.mockito.InOrder;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
+import org.mockito.Spy;
+
 
 public class KeychainManagerTest{
+
+	@Mock
+	KeychainManager keychainManagerMock;
 
 	@Test
 	public void testStoreAndLoad() throws KeychainAccessException {
@@ -83,6 +106,17 @@ public class KeychainManagerTest{
 		// check if passphrase is still stored (and changed)
 		Assertions.assertEquals(true, keychainManager.isPassphraseStored("irvineMSWE"));
 	}
+
+	@Test
+	public void checkIfPassphraseStoredIsCalledAfterStoringPassphrase() throws KeychainAccessException {
+		keychainManagerMock = new KeychainManager(new SimpleObjectProperty<>(new MapKeychainAccess()));
+		keychainManagerMock.storePassphrase("irvineMSWE", "remove");
+		keychainManagerMock.changePassphrase("irvineMSWE", "test_phrase");
+		InOrder inOrder = inOrder(keychainManagerMock);
+		inOrder.verify(keychainManagerMock).changePassphrase("irvineMSWE", "test_phrase");
+		inOrder.verify(keychainManagerMock).isPassphraseStored("irvineMSWE");
+	}
+
 
 	@Test
 	public void testIsSupportAndIsLock() throws KeychainAccessException {

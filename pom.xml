@@ -284,6 +284,8 @@
 						<arg>-Adagger.fastInit=enabled</arg>
 						<arg>-Adagger.formatGeneratedSource=enabled</arg>
 					</compilerArgs>
+					<source>16</source>
+					<target>16</target>
 				</configuration>
 			</plugin>
 			<plugin>
