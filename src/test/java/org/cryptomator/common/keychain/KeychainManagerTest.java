@@ -89,7 +89,7 @@ public class KeychainManagerTest{
 		keychainManager.displayName();
 
 		// check if passphrase is stored now
-		Assertions.assertEquals(false, keychainManager.isPassphraseStored("test"));
+		Assertions.assertEquals(false, keychainManager.isPassphraseStored("irvine"));
 	}
 
 	@Test
